@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html>
+<title>{Title}</title>
+<head>
+    <style>
+        /*regular stuff yo*/
+        html {
+            padding: 0px;
+            margin: 0px;
+        }
+        body {
+            padding: 0px;
+            margin: 0px;
+            background-image: url("tumblr_green_cat_bg.jpg");
+            background-attachment: fixed; /*BACKGROUND PLEASE DON'T MOVE WHEN I SCROLL.*/
+        }
+        sidebar { /*sidebar + title placement + description + avatar placement*/
+            /*sidebar itself*/
+            padding: 20px;
+            width: 200px;
+            background-color: rgba(0,0,0,0.15);
+            position: fixed; /*SIDEBAR DON'T MOVE UP OR DOWN WHEN I SCROLL OKAY*/
+            top: 20px;
+            left: -240px;
+            border-radius: 10px;
+            
+            /*sliding wow hooray yes*/
+            -webkit-transition-duration: 0.3s;
+            -moz-transition-duration: 0.3s;
+            -o-transition-duration: 0.3s;
+            transition-duration: 0.3s;
+            
+            /*text formatting*/
+            font-family: "Arial Narrow", sans-serif;
+            color: white;
+            text-align: center;
+        }
+        ul {
+            font-size: 10px;
+            padding: 0px;
+            list-style: none;
+        }
+        li {
+            /*padding: 5px;
+            display: inline;*/
+            text-align: right;
+            list-style-position: none;
+        }
+        li a {
+            text-decoration: none;
+            color: white;
+        }
+        
+        /*classes!*/
+        .post {
+            background: rgba(0,0,0,0.5);
+            width: 500px;
+            margin: 20px auto;
+            border-radius: 5px;
+            padding: 20px;
+            font-family: "Century Gothic";
+            color: white;
+        }
+        .post a { /*links in posts*/
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+        
+        /*specific ids now*/
+        #blogTitle { /*title of blog (also a link to blog)*/
+            text-decoration: none;
+            color: black;
+            font-size: 40px;
+        }
+        #avatar { /*my pretty face hnnng~*/
+            border-radius: 10px;
+        }
+        #slideoutTab /*invisible tab that contains the avatar hahaha*/ {
+            position: fixed;
+            top: 20px;
+            left: 0px;
+            margin: 0px 20px;
+            
+            /*let's see if this baby can slide*/
+            -webkit-transition-duration: 0.3s;
+            -moz-transition-duration: 0.3s;
+            -o-transition-duration: 0.3s;
+            transition-duration: 0.3s;
+        }
+        #slideoutTab:hover {
+            left: 260px;
+        }
+        #slideoutTab:hover sidebar {
+            left: 20px;
+        }
+        li a:hover {
+            color: black;
+        }
+        /*
+        #backgroundOverlay {
+            background-color: rgba(255,255,255,0.5);
+        }
+        #postBGYeah {
+            background: rgba(0,0,0,0.15);
+            width: 540px;
+            margin: 0 auto;
+            padding: 20px;
+        }*/
+        @media(max-width: 1415px) {
+            #postArea { /*this is the thing that keeps posts from overlapping sidebar*/
+                margin: 0px 0px 0px 428px;
+                padding: 0px;
+            }
+            .post {
+                margin: 0px;
+            }
+        }
+    </style>
+</head>
+
+<!--This is where the content starts-->
+<body>
+<div id="backgroundOverlay">
+    <!--Sidebar stuff yeah-->
+    <div id="slideoutTab">
+        <img id="avatar" src="{PortraitURL-128}">
+        <sidebar>
+        <div class="container">
+            <a id="blogTitle" href="{BlogURL}">{Title}</a>
+            <br><br>
+            {block:Description}
+                {Description}
+            {/block:Description}
+            <br><br><br>
+            <ul class="linksYeah">
+                <li><a href="{BlogURL}tagged/funny">FUNNY STUFF I SWEAR</a></li>
+                <li><a href="{BlogURL}tagged/text-post">TEXT POSTS</a></li>
+                <li><a href="{BlogURL}tagged/aesthetically-pleasing">PRETTY STUFF</a></li>
+                <li><a href="{BlogURL}tagged/space">SPACE</a></li>
+                <li><a href="{BlogURL}tagged/be-still-my-heart">BE STILL MY HEART</a></li>
+                <br>
+                <li><a href="{BlogURL}tagged/feel-better-okay">FEEL BETTER OKAY</a></li>
+                <li><a href="{BlogURL}tagged/things-to-remember">THINGS TO REMEMBER</a></li>
+            </ul>
+        </div>
+        </sidebar> 
+    </div>
+   
+    <!--Posts yeah whoo (aka everything that's not the sidebar lol)-->
+    <div id="postArea">
+    <div id="postBGYeah">
+    {block:Posts}
+    
+        <!--1. Text posts-->
+        {block:Text}
+        <div class="post">
+            {Title}
+            {Body}
+        </div>
+        {/block:Text}
+        
+        <!--2. Photo posts-->
+        {block:Photo}
+        <div class="post">
+            <img src="{PhotoURL-500}">
+            {block:Caption}
+                {Caption}
+            {/block:Caption}
+        </div>
+        {/block:Photo}
+        
+        <!--3. Quote posts-->
+        {block:Quote}
+        <div class="post">
+            {Quote}
+            {block:Source}
+                <br>&mdash;{Source}
+            {/block:Source}
+        </div>
+        {/block:Quote}
+        
+        <!--4. Link posts-->
+        {block:Link}
+        <div class="post">
+            <a href="{URL}" {Target}>{Name}</a>
+            {block:Description}
+                {Description}
+            {/block:Description}
+        </div>
+        {/block:Link}
+        
+        <!--5. Chat posts-->
+        {block:Chat}
+        <div class="post">
+            {block:Title}
+                {Title}
+            {/block:Title}
+            <table>
+                {block:Lines}
+                <tr>
+                    <th>{block:Label}{Label}{/block:Label}</th>
+                    <td>{Line}</td>
+                </tr>
+                {/block:Lines}
+            </table>
+        </div>
+        {/block:Chat}
+        
+    {/block:Posts}
+    </div>
+    </div>
+</div>
+</body>    
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
